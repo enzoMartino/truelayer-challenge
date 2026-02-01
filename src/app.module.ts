@@ -6,9 +6,7 @@ import { ClsModule, ClsService } from 'nestjs-cls';
 
 import { v4 as uuidv4 } from 'uuid';
 import { Request } from 'express';
-import { AppController } from './app.controller';
 
-import { AppService } from './app.service';
 import { HealthModule } from './health/health.module';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { LoggerModule } from 'nestjs-pino';
@@ -77,7 +75,7 @@ import { GlobalHttpModule } from './common/http/global-http.module';
     HealthModule,
     PokemonModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
