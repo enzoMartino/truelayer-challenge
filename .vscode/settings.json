@@ -2,5 +2,22 @@
     "snyk.advanced.autoSelectOrganization": true,
     "chat.tools.terminal.autoApprove": {
         "git init": true
+    },
+    "cSpell.words": [
+        "charizard",
+        "mundo",
+        "pikachu",
+        "uuidv"
+    ],
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }

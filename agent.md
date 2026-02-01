@@ -1,5 +1,9 @@
 # Agent Guidelines & Project Patterns
 
+## Workflow Rules (CRITICAL)
+1. **Read Guidelines First**: You MUST read this `agent.md` file before writing any code to ensure you are following the latest project patterns and standards.
+2. **Prettier Formatting**: Ensure that the Prettier configuration is respected. The project is configured to format on save, but when generating code, try to adhere to Prettier standards (e.g., single quotes, trailing commas) to minimize noise.
+
 ## Project Architecture
 - **Framework**: NestJS (Strict Mode)
 - **Language**: TypeScript
@@ -7,8 +11,12 @@
 
 ## Code Style & Quality
 - **Linting**: ESLint (Standard NestJS config).
+    - **Object Shorthand**: Always use object shorthand syntax where possible (`{ value }` instead of `{ value: value }`).
 - **Formatting**: Prettier.
-- **Git Hooks**: Husky `pre-push` executes `npm run lint` and `npm run test`.
+- **Git Hooks**: Husky `pre-push` executes `npm run lint`, `npm run test` (unit), `npm run test:e2e` (integration/startup), and `npm run build`.
+- **Strict Typing**:
+    - **No `any`**: Explicitly forbid usage of `any`. Use `unknown`, strict interfaces, or generics instead.
+    - **No Magic Casts**: Avoid `as any` casts in tests or logic. Use `@ts-expect-error` for testing runtime failures if absolutely necessary.
 
 ## Production Readiness Patterns
 1.  **Security**:
@@ -23,10 +31,12 @@
 3.  **Observability**:
     - Health checks enabled at `/health` using `@nestjs/terminus`.
     - Checks external dependencies (PokeAPI, FunTranslations) and memory usage.
+    - **Tracing**: Request tracing enabled using `nestjs-cls`. `traceId` is available in logs, error responses, and can be retrieved via `ClsService`.
 
 4.  **Documentation**:
     - OpenAPI (Swagger) auto-generated at `/api`.
     - All Controllers and DTOs must use `@nestjs/swagger` decorators (`@ApiTags`, `@ApiOperation`, `@ApiResponse`, `@ApiProperty`).
+    - **Unified Error Interface**: When building new endpoints, always use the `ApiErrorResponseDto` for `@ApiResponse` decorators to ensure consistent error documentation in Swagger.
 
 5.  **Performance**:
     - Caching enabled globally using `@nestjs/cache-manager` to handle external API rate limits.
