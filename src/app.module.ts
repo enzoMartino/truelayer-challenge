@@ -11,12 +11,14 @@ import { HealthModule } from './health/health.module';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { LoggerModule } from 'nestjs-pino';
 import { GlobalHttpModule } from './common/http/global-http.module';
+import { envValidationSchema } from '@/common/config/env.validation';
 
 @Module({
   imports: [
     GlobalHttpModule,
     ConfigModule.forRoot({
       isGlobal: true, // Make config available everywhere
+      validationSchema: envValidationSchema,
     }),
 
     ClsModule.forRoot({
