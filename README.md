@@ -17,6 +17,7 @@ A RESTful API built with NestJS to retrieve Pokemon information. This service ac
 
 Ensure you have the following installed on your system:
 
+- **[Git](https://git-scm.com/downloads)**: Required to clone the repository.
 - **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**: Required for containerization and running the production environment.
 - **[Node.js](https://nodejs.org/)** (v18 or higher): Required for local development.
 - **[npm](https://www.npmjs.com/)** (v9 or higher): Package manager usually included with Node.js.
