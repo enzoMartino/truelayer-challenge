@@ -3,9 +3,9 @@ import { PokemonService } from './v1/pokemon.service';
 import { PokemonController } from './v1/pokemon.controller';
 import { PokemonRepository } from './repositories/pokemon.repository';
 
-import { PokeApiRepository } from './repositories/poke-api.repository';
+import { PokeApiRepository } from './repositories/poke-api/poke-api.repository';
 import { TranslationRepository } from './repositories/translation.repository';
-import { FunTranslationsRepository } from './repositories/fun-translations.repository';
+import { FunTranslationsRepository } from './repositories/fun-translations/fun-translations.repository';
 
 @Module({
   imports: [],

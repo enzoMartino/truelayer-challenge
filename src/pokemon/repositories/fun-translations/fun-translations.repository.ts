@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
-import { TranslationRepository } from './translation.repository';
+import { TranslationRepository } from '../translation.repository';
 import { FunTranslationsResponse } from './fun-translations.types';
 import { handleFunTranslationsError } from './fun-translations.error-handler';
 
