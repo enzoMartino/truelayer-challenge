@@ -181,6 +181,45 @@ describe('PokemonController (e2e)', () => {
         });
     });
 
+    it('should retry on 5xx errors and succeed', () => {
+      nock('https://pokeapi.co')
+        .get('/api/v2/pokemon-species/retrymon')
+        .reply(200, {
+          name: 'retrymon',
+          flavor_text_entries: [
+            {
+              flavor_text: 'It perseveres.',
+              language: { name: 'en' },
+            },
+          ],
+          habitat: { name: 'forest' },
+          is_legendary: false,
+        });
+
+      // Fail twice with 500, then succeed
+      nock('https://api.funtranslations.com')
+        .post('/translate/shakespeare.json')
+        .reply(500)
+        .post('/translate/shakespeare.json')
+        .reply(500)
+        .post('/translate/shakespeare.json')
+        .reply(200, {
+          success: { total: 1 },
+          contents: {
+            translated: 'It perseveres, forsooth.',
+            text: 'It perseveres.',
+            translation: 'shakespeare',
+          },
+        });
+
+      return request(app.getHttpServer())
+        .get('/v1/pokemon/translated/retrymon')
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.description).toBe('It perseveres, forsooth.');
+        });
+    });
+
     it('should fallback to standard description if translation API fails', () => {
       nock('https://pokeapi.co')
         .get('/api/v2/pokemon-species/failmon')
