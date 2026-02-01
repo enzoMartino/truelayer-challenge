@@ -140,6 +140,28 @@ Returns Pokemon information with a translated description.
 }
 ```
 
+## Design & Approach
+
+### Architectural Pattern
+The application follows a standard **Layered Architecture** (Controller → Service → Repository) to ensure separation of concerns and testability:
+- **Controllers**: Handle HTTP transport, validation, caching headers, and response serialization.
+- **Services**: Contain business logic and orchestration (e.g., deciding which translation strategy to use).
+- **Repositories**: Encapsulate external API interactions, handling specific error codes (429, 500) and response mapping. This ensures the Core Service is decoupled from `axios` implementation details.
+
+### Resilience Strategy
+The application is designed to be resilient to upstream failures, ensuring a robust user experience:
+- **Retries**: Transient failures (5xx, Network Errors) are automatically retried with exponential backoff.
+- **Graceful Degradation**: If the Translation API is unavailable (e.g., Rate Limited 429), the service explicitly catches the error and falls back to the standard description rather than failing the user's request.
+
+### Testing Strategy
+- **Unit Tests**: Focused on pure business logic (e.g., `translation.utils.ts`) to verify business rules (Yoda vs Shakespeare) without extensive mocking.
+- **E2E Tests**: Extensive use of `nock` to verify infrastructure resilience, simulating 500 errors to test retries and 429 errors to test fallbacks.
+- **Factories**: Test data generation is centralized in `test/factories` to prevent brittle tests.
+
+### Observability
+- **Correlation IDs**: Implemented using `nestjs-cls` to track requests across the application lifecycle.
+- **Structured Logging**: Uses `pino` for JSON-formatted logs, ensuring logs are machine-readable and ready for ingestion by aggregation tools (ELK, Datadog).
+
 ## Production Considerations
 
 While this application meets the requirements of the challenge, for a high-scale production environment, the following architectural improvements would be considered:
