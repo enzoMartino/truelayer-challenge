@@ -139,3 +139,23 @@ Returns Pokemon information with a translated description.
   "isLegendary": true
 }
 ```
+
+## Production Considerations
+
+While this application meets the requirements of the challenge, for a high-scale production environment, the following architectural improvements would be considered:
+
+1.  **Distributed Caching (Redis)**:
+    -   *Current*: In-Memory cache.
+    -   *Improvement*: Replace with Redis. In a Kubernetes environment with multiple replicas, in-memory caches are not shared, leading to low cache hit ratios and redundant upstream requests.
+
+2.  **Circuit Breaker Pattern**:
+    -   *Current*: Retry mechanism with exponential backoff.
+    -   *Improvement*: Implement a full Circuit Breaker (e.g., Opossum). If an upstream API is down for an extended period, retrying every request wastes resources. A circuit breaker would "fail fast" to protect the system.
+
+3.  **Secret Management**:
+    -   *Current*: `.env` files.
+    -   *Improvement*: Integrate with AWS Secrets Manager, HashiCorp Vault, or Kubernetes Secrets to inject sensitive credentials at runtime without storing them on disk.
+
+4.  **Advanced Observability**:
+    -   *Current*: Structured logging and correlation IDs.
+    -   *Improvement*: Export Prometheus metrics (latency histograms, error rates) and integrate with APM tools (Datadog, New Relic) for real-time alerting.
