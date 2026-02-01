@@ -68,4 +68,144 @@ describe('PokemonController (e2e)', () => {
         });
     });
   });
+
+  describe('GET /v1/pokemon/translated/:name', () => {
+    it('should translate description using Yoda for legendary pokemon', () => {
+      nock('https://pokeapi.co')
+        .get('/api/v2/pokemon-species/mewtwo')
+        .reply(200, {
+          name: 'mewtwo',
+          flavor_text_entries: [
+            {
+              flavor_text: 'It was created by a scientist.',
+              language: { name: 'en' },
+            },
+          ],
+          habitat: { name: 'rare' },
+          is_legendary: true,
+        });
+
+      nock('https://api.funtranslations.com')
+        .post('/translate/yoda.json', {
+          text: 'It was created by a scientist.',
+        })
+        .reply(200, {
+          success: { total: 1 },
+          contents: {
+            translated: 'Created by a scientist, it was.',
+            text: 'It was created by a scientist.',
+            translation: 'yoda',
+          },
+        });
+
+      return request(app.getHttpServer())
+        .get('/v1/pokemon/translated/mewtwo')
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.name).toBe('mewtwo');
+          expect(res.body.description).toBe('Created by a scientist, it was.');
+          expect(res.body.habitat).toBe('rare');
+          expect(res.body.isLegendary).toBe(true);
+        });
+    });
+
+    it('should translate description using Yoda for cave pokemon', () => {
+      nock('https://pokeapi.co')
+        .get('/api/v2/pokemon-species/zubat')
+        .reply(200, {
+          name: 'zubat',
+          flavor_text_entries: [
+            {
+              flavor_text: 'It lives in caves.',
+              language: { name: 'en' },
+            },
+          ],
+          habitat: { name: 'cave' },
+          is_legendary: false,
+        });
+
+      nock('https://api.funtranslations.com')
+        .post('/translate/yoda.json', {
+          text: 'It lives in caves.',
+        })
+        .reply(200, {
+          success: { total: 1 },
+          contents: {
+            translated: 'In caves, it lives.',
+            text: 'It lives in caves.',
+            translation: 'yoda',
+          },
+        });
+
+      return request(app.getHttpServer())
+        .get('/v1/pokemon/translated/zubat')
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.description).toBe('In caves, it lives.');
+        });
+    });
+
+    it('should translate description using Shakespeare for standard pokemon', () => {
+      nock('https://pokeapi.co')
+        .get('/api/v2/pokemon-species/pikachu')
+        .reply(200, {
+          name: 'pikachu',
+          flavor_text_entries: [
+            {
+              flavor_text: 'Electric mouse.',
+              language: { name: 'en' },
+            },
+          ],
+          habitat: { name: 'forest' },
+          is_legendary: false,
+        });
+
+      nock('https://api.funtranslations.com')
+        .post('/translate/shakespeare.json', {
+          text: 'Electric mouse.',
+        })
+        .reply(200, {
+          success: { total: 1 },
+          contents: {
+            translated: 'Electric mouse, forsooth.',
+            text: 'Electric mouse.',
+            translation: 'shakespeare',
+          },
+        });
+
+      return request(app.getHttpServer())
+        .get('/v1/pokemon/translated/pikachu')
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.description).toBe('Electric mouse, forsooth.');
+        });
+    });
+
+    it('should fallback to standard description if translation API fails', () => {
+      nock('https://pokeapi.co')
+        .get('/api/v2/pokemon-species/failmon')
+        .reply(200, {
+          name: 'failmon',
+          flavor_text_entries: [
+            {
+              flavor_text: 'Original description.',
+              language: { name: 'en' },
+            },
+          ],
+          habitat: { name: 'forest' },
+          is_legendary: false,
+        });
+
+      nock('https://api.funtranslations.com')
+        .post('/translate/shakespeare.json')
+        .reply(429, { error: 'Too Many Requests' });
+
+      return request(app.getHttpServer())
+        .get('/v1/pokemon/translated/failmon')
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.description).toBe('Original description.');
+        });
+    });
+  });
 });

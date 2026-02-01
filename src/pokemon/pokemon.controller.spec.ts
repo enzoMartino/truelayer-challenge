@@ -10,6 +10,7 @@ describe('PokemonController', () => {
 
   const mockPokemonService = {
     getPokemon: jest.fn(),
+    getTranslatedPokemon: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -44,5 +45,18 @@ describe('PokemonController', () => {
 
     expect(await controller.getPokemon('mewtwo')).toEqual(expectedResult);
     expect(service.getPokemon).toHaveBeenCalledWith('mewtwo');
+  });
+
+  it('should return a translated pokemon', async () => {
+    const expectedResult = createPokemon({
+      description: 'Translated Description',
+    });
+
+    mockPokemonService.getTranslatedPokemon.mockResolvedValue(expectedResult);
+
+    expect(await controller.getTranslatedPokemon('mewtwo')).toEqual(
+      expectedResult,
+    );
+    expect(service.getTranslatedPokemon).toHaveBeenCalledWith('mewtwo');
   });
 });

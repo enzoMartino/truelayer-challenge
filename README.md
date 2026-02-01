@@ -48,6 +48,7 @@ cp .env.example .env
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `POKEMON_API_URL` | Upstream PokeAPI URL | `https://pokeapi.co/api/v2/pokemon-species` |
+| `FUN_TRANSLATIONS_API_URL` | Upstream FunTranslations API URL | `https://api.funtranslations.com/translate` |
 | `LOG_LEVEL` | Logging verbosity (trace, debug, info, etc) | `info` |
 
 ## Testing
@@ -82,5 +83,23 @@ Returns basic Pokemon information.
   "description": "Spits fire that is hot enough to melt boulders.",
   "habitat": "mountain",
   "isLegendary": false
+}
+```
+
+### `GET /pokemon/translated/:name`
+
+Returns Pokemon information with a translated description.
+
+- **Yoda translation**: If the Pokemon's habitat is `cave` or it is legendary.
+- **Shakespeare translation**: For all other Pokemon.
+- **Fallback**: Returns standard description if translation service is unavailable.
+
+**Response:**
+```json
+{
+  "name": "mewtwo",
+  "description": "Created by a scientist, it was.",
+  "habitat": "rare",
+  "isLegendary": true
 }
 ```

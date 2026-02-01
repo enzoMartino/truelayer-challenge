@@ -4,6 +4,8 @@ import { PokemonController } from './pokemon.controller';
 import { PokemonRepository } from './repositories/pokemon.repository';
 
 import { PokeApiRepository } from './repositories/poke-api.repository';
+import { TranslationRepository } from './repositories/translation.repository';
+import { FunTranslationsRepository } from './repositories/fun-translations.repository';
 
 @Module({
   imports: [],
@@ -14,6 +16,10 @@ import { PokeApiRepository } from './repositories/poke-api.repository';
     {
       provide: PokemonRepository,
       useClass: PokeApiRepository,
+    },
+    {
+      provide: TranslationRepository,
+      useClass: FunTranslationsRepository,
     },
   ],
 })
