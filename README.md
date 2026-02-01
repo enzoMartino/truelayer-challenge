@@ -15,27 +15,61 @@ A RESTful API built with NestJS to retrieve Pokemon information. This service ac
 
 ## Prerequisites
 
-- Node.js (v18+)
-- npm (v9+)
+Ensure you have the following installed on your system:
+
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**: Required for containerization and running the production environment.
+- **[Node.js](https://nodejs.org/)** (v18 or higher): Required for local development.
+- **[npm](https://www.npmjs.com/)** (v9 or higher): Package manager usually included with Node.js.
 
 ## Installation
 
-```bash
-npm install
-```
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd truelayer-challenge
+   ```
 
-## Running the app
+2. **Install dependencies** (for local development)
+   ```bash
+   npm install
+   ```
 
-```bash
-# development
-npm run start
+## Running with Docker (Recommended)
 
-# watch mode
-npm run start:dev
+This is the easiest way to run the application as it handles all dependencies and environment setup automatically.
 
-# production mode
-npm run start:prod
-```
+1. **Start the application**
+   ```bash
+   docker-compose up --build
+   ```
+
+   The application will be available at http://localhost:3000.
+
+2. **Verify Docker Setup**
+   We have included automated scripts to verify the Docker container is building and running correctly:
+   
+   **Verify Dockerfile (single container):**
+   ```bash
+   npm run test:docker
+   ```
+
+   **Verify Docker Compose (full stack):**
+   ```bash
+   npm run test:docker-compose
+   ```
+
+## Local Development
+
+If you prefer to run the application locally without Docker:
+
+1. **Start the app**
+   ```bash
+   # development
+   npm run start
+   
+   # watch mode (auto-reload)
+   npm run start:dev
+   ```
 
 ## Configuration
 
@@ -72,9 +106,10 @@ Once the application is running, Swagger documentation is available at:
 
 ## API Endpoints
 
-### `GET /pokemon/:name`
+### `GET /v1/pokemon/:name`
 
 Returns basic Pokemon information.
+
 
 **Response:**
 ```json
@@ -86,9 +121,10 @@ Returns basic Pokemon information.
 }
 ```
 
-### `GET /pokemon/translated/:name`
+### `GET /v1/pokemon/translated/:name`
 
 Returns Pokemon information with a translated description.
+
 
 - **Yoda translation**: If the Pokemon's habitat is `cave` or it is legendary.
 - **Shakespeare translation**: For all other Pokemon.
