@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CacheModule } from '@nestjs/cache-manager';
 import { PokemonController } from './pokemon.controller';
 import { PokemonService } from './pokemon.service';
-import { createPokemon } from '../../../test/factories/pokemon.factory';
+import { createPokemon } from '@test/factories/pokemon.factory';
 
 describe('PokemonController', () => {
   let controller: PokemonController;

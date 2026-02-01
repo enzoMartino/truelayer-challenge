@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { PokemonRepository } from './pokemon.repository';
-import { Pokemon } from '../entities/pokemon.entity';
+import { Pokemon } from '@/pokemon/entities/pokemon.entity';
 import {
   findEnglishDescription,
   cleanDescription,

@@ -3,7 +3,7 @@ import { PokeApiRepository } from './poke-api.repository';
 import { HttpModule } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { NotFoundException } from '@nestjs/common';
-import { createPokemon } from '../../../test/factories/pokemon.factory';
+import { createPokemon } from '@test/factories/pokemon.factory';
 import * as nock from 'nock';
 
 describe('PokeApiRepository', () => {

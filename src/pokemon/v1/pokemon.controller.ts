@@ -1,8 +1,8 @@
 import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { PokemonService } from './pokemon.service';
 import { ApiOperation, ApiResponse, ApiTags, ApiParam } from '@nestjs/swagger';
-import { Pokemon } from '../entities/pokemon.entity';
-import { ApiErrorResponseDto } from '../../common/dto/api-error-response.dto';
+import { Pokemon } from '@/pokemon/entities/pokemon.entity';
+import { ApiErrorResponseDto } from '@/common/dto/api-error-response.dto';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @ApiTags('pokemon')

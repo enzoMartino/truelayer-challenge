@@ -1,4 +1,4 @@
-import { Pokemon } from '../entities/pokemon.entity';
+import { Pokemon } from '@/pokemon/entities/pokemon.entity';
 
 export type TranslationStrategy = 'yoda' | 'shakespeare';
 

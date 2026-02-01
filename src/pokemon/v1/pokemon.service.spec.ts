@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PokemonService } from './pokemon.service';
-import { PokemonRepository } from '../repositories/pokemon.repository';
-import { TranslationRepository } from '../repositories/translation.repository';
-import { createPokemon } from '../../../test/factories/pokemon.factory';
+import { PokemonRepository } from '@/pokemon/repositories/pokemon.repository';
+import { TranslationRepository } from '@/pokemon/repositories/translation.repository';
+import { createPokemon } from '@test/factories/pokemon.factory';
 
 describe('PokemonService', () => {
   let service: PokemonService;

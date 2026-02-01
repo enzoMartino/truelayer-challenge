@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Pokemon } from '../entities/pokemon.entity';
-import { PokemonRepository } from '../repositories/pokemon.repository';
-import { TranslationRepository } from '../repositories/translation.repository';
-import { getTranslationStrategy } from '../utils/translation.utils';
+import { Pokemon } from '@/pokemon/entities/pokemon.entity';
+import { PokemonRepository } from '@/pokemon/repositories/pokemon.repository';
+import { TranslationRepository } from '@/pokemon/repositories/translation.repository';
+import { getTranslationStrategy } from '@/pokemon/utils/translation.utils';
 
 @Injectable()
 export class PokemonService {

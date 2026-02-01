@@ -1,5 +1,7 @@
 # TrueLayer Challenge - Pokedex API
 
+**Repository:** [https://github.com/enzoMartino/truelayer-challenge](https://github.com/enzoMartino/truelayer-challenge)
+
 A RESTful API built with NestJS to retrieve Pokemon information. This service acts as a proxy to the PokeAPI, enhancing response times with caching and providing standardized error handling.
 
 ## Features

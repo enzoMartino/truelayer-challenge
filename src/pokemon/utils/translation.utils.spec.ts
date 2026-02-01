@@ -3,7 +3,7 @@ import {
   isCavePokemon,
   isLegendaryPokemon,
 } from './translation.utils';
-import { createPokemon } from '../../../test/factories/pokemon.factory';
+import { createPokemon } from '@test/factories/pokemon.factory';
 
 describe('Translation Utils', () => {
   describe('isCavePokemon', () => {

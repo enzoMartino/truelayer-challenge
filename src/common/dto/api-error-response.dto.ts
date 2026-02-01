@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ApiErrorResponse } from '../interfaces/api-error-response.interface';
+import { ApiErrorResponse } from '@/common/interfaces/api-error-response.interface';
 
 export class ApiErrorResponseDto implements ApiErrorResponse {
   @ApiProperty({ example: 400, description: 'HTTP status code' })

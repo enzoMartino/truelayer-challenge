@@ -7,7 +7,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import { ApiErrorResponse } from '../interfaces/api-error-response.interface';
+import { ApiErrorResponse } from '@/common/interfaces/api-error-response.interface';
 import { ClsService } from 'nestjs-cls';
 
 @Catch()
